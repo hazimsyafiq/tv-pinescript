@@ -1,0 +1,22 @@
+study(title="TAS", overlay=true)
+
+SMA2=sma(close, 2)
+SMA5=sma(close, 5)
+SMA20=sma(close, 20)
+EMA20=ema(close, 20)
+SMA40=sma(close, 40)
+SMA50=sma(close, 50)
+EMA50=ema(close, 50)
+SMA150=sma(close, 150)
+SMA200=sma(close, 200)
+
+data = heikenashi(tickerid) 
+o = security(data, period, open)
+c = security(data, period, close)
+
+[macdLine, signalLine, _]=macd(close, 12, 26, 9)
+SAR=sar(0.02, 0.02, 2)
+RSI=rsi(close, 14)
+STOCH=stoch(close, high, low, 14)
+K=sma(STOCH, 3)
+D=sma(K, 3)
