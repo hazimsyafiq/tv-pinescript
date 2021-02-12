@@ -20,3 +20,38 @@ RSI=rsi(close, 14)
 STOCH=stoch(close, high, low, 14)
 K=sma(STOCH, 3)
 D=sma(K, 3)
+
+cloud = input(false, "Ichimoku Cloud")
+donchian(len) => avg(lowest(len), highest(len))
+conversionLine = donchian(9)
+baseLine = donchian(26)
+leadLine1 = avg(conversionLine, baseLine)
+leadLine2 = donchian(52)
+
+plot(SMA2, title="SMA 2", color=green, style=line, linewidth=1)
+plot(SMA5, title="SMA 5", color=red, style=line, linewidth=1)
+plot(SMA40, title="SMA 40", color=aqua, style = line, linewidth=2)
+plot(SMA150, title="SMA 150", color=yellow, style = line, linewidth=2)
+plot(SMA200, title="SMA 200", color=aqua, style = line, linewidth=2)
+plot(SAR, title="Parabolic SAR", color=aqua, style=circles, linewidth=2)
+plot(cross(SMA2, SMA5) ? SMA2 : na, title="SMA 2 & 5 Crossover", style = cross, linewidth = 4)
+fill(plot(SMA20, title="SMA 20", transp=100), plot(EMA20, title="EMA 20", transp=100), color=green, transp=75, title="Band 20")
+fill(plot(SMA50, title="SMA 50", transp=100), plot(EMA50, title="EMA 50", transp=100), color=red, transp=75, title="Band 50")
+
+buy1=crossover(SMA2, SMA5) and D < K and D < 20
+buy2=crossover(macdLine, signalLine) and SMA2 > SMA5 and close > SAR and D < 80 and RSI > 50
+sell1=crossunder(SMA2, SMA5) and D > K and D > 80
+sell2=crossunder(macdLine, signalLine) and SMA2 < SMA5 and close < SAR and D > 20 and RSI < 50
+
+plotshape(buy1? buy1 : na, title="Buy Signal 1", style=shape.triangleup, location=location.belowbar, color=yellow, size=size.tiny)
+plotshape(buy2? buy2 : na, title="Buy SIgnal 2", style=shape.triangleup, location=location.belowbar, color=lime, size=size.tiny)
+plotshape(sell1? sell1 : na, title="Sell Signal 1", style=shape.triangledown, location=location.abovebar, color=orange, size=size.tiny)
+plotshape(sell2? sell2 : na, title="Sell SIgnal 2", style=shape.triangledown, location=location.abovebar, color=red, size=size.tiny)
+p1 = plot(cloud ? leadLine1 : na, offset=26, color=green, title="Lead 1")
+p2 = plot(cloud ? leadLine2 : na, offset=26, color=red, title="Lead 2")
+fill(p1, p2, color = leadLine1 > leadLine2 ? green : red)
+
+buysignal=c > o and c[1] < o[1] and c > leadLine1[26] and c > leadLine2[26] and SMA20 > SMA40 and SMA40[1] < SMA40
+sellsignal=c < o and c[1] > o[1] and c < leadLine1[26] and c < leadLine2[26] and SMA20 < SMA40 and SMA40[1] > SMA40
+barcolor(buysignal? yellow : na, title="HA Ichimoku Buy Signal 1")
+barcolor(sellsignal? red : na, title="HA Ichimoku Sell SIgnal 2")
