@@ -1,0 +1,8 @@
+//@version=3
+study("Alligator",overlay=true)
+ema13=ema(close,13)
+ema34=ema(close,34)
+ema55=ema(close,55)
+plot(ema13, title="EMA 13", color=green, style=line, linewidth=2)
+plot(ema34, title="EMA 34", color=orange, style=line, linewidth=2)
+plot(ema55, title="EMA 55", color=red, style=line, linewidth=2)
