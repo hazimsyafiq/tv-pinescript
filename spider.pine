@@ -1,0 +1,30 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+//@version=4
+study(title="Spider Setup", shorttitle="Spider", overlay=true)
+
+ema6 = ema(close, 6)
+ema9 = ema(close, 9)
+plot(ema6, "EMA6", color=color.green, linewidth=2)
+plot(ema9, "EMA9", color=color.red, linewidth=2)
+
+midbb = sma(close, 9)
+dev9 = 2 * stdev(close, 9)
+dev20 = 2 * stdev(close, 20)
+upper9 = midbb + dev9
+lower9 = midbb - dev9
+upper20 = midbb + dev20
+lower20 = midbb - dev20
+
+plot(midbb, "Mid BB", color=color.blue)
+p1 = plot(upper9, "Upper BB9", color=color.teal)
+p2 = plot(lower9, "Lower BB9", color=color.teal)
+fill(p1, p2, title = "Background BB9", color=#198787, transp=85)
+
+p3 = plot(upper20, "Upper BB20", color=color.teal)
+p4 = plot(lower20, "Lower BB20", color=color.teal)
+fill(p3, p4, title = "Background BB20", color=#787B86, transp=95)
+
+psar = sar(0.02, 0.02, 0.2)
+dir = psar < close ? 1 : -1
+psarColor = dir == 1 ? color.green : color.red
+plot(psar, "Parabolic SAR", style=plot.style_circles, color=psarColor, linewidth=2)
