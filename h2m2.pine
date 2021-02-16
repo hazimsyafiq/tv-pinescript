@@ -1,0 +1,17 @@
+study(title="H2M2", overlay=true)
+
+data = heikenashi(tickerid) 
+o = security(data, period, open)
+h = security(data, period, high)
+l = security(data, period, low)
+c = security(data, period, close)
+
+STOCH=stoch(c, h, l, 14)
+K=sma(STOCH, 3)
+D=sma(K, 3)
+
+buy=c > o and o[1] > c[1] and D < K and D < 20
+sell=c < o and o[1] < c[1] and D > K and D > 80
+
+plotshape(buy? buy : na, title="Buy Signal", style=shape.triangleup, location=location.belowbar, color=lime, size=size.tiny)
+plotshape(sell? sell : na, title="Sell SIgnal", style=shape.triangledown, location=location.abovebar, color=red, size=size.tiny)
