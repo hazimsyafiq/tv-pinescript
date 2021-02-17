@@ -1,0 +1,26 @@
+study(title="Bollinger Band Stochastic", shorttitle="BBSO", overlay=true)
+
+bb = input(false, "Bollinger Band")
+basis = sma(close, 20)
+dev = 2 * stdev(close, 20)
+upper = basis + dev
+lower = basis - dev
+
+Stoch = stoch(close, high, low, 14)
+K = sma(Stoch,3)
+D = sma(K, 3)
+
+buy1=close > close[1] and close[1] < lower[1] and D < 20
+buy2=crossover(K, D) and (close[1] < lower[1] or close[2] < lower[2] or close[3] < lower[3])
+sell1=close > close[1] and close[1] > upper[1] and D > 80
+sell2=crossunder(K, D) and (close[1] > upper[1] or close[2] > upper[2] or close[3] > upper[3])
+
+plotshape(buy1? buy1 : na, title="Buy Signal 1", style=shape.triangleup, location=location.belowbar, color=yellow, size=size.tiny)
+plotshape(buy2? buy2 : na, title="Buy SIgnal 2", style=shape.triangleup, location=location.belowbar, color=lime, size=size.tiny)
+plotshape(sell1? sell1 : na, title="Sell Signal 1", style=shape.triangledown, location=location.abovebar, color=orange, size=size.tiny)
+plotshape(sell2? sell2 : na, title="Sell SIgnal 2", style=shape.triangledown, location=location.abovebar, color=red, size=size.tiny)
+
+mid = plot(bb ? basis : na, color=red)
+b1 = plot(bb ? upper : na, color=aqua)
+b2 = plot(bb ? lower : na, color=aqua)
+fill(b1, b2, transp=95)
