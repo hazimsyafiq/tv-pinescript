@@ -1,0 +1,13 @@
+study(title="Buy On Dip Oversold", shorttitle="BODO", overlay=true)
+
+[macdLine, signalLine, histLine]=macd(close, 21, 34, 13)
+Stoch = stoch(close, high, low, 13)
+K = sma(Stoch,8)
+D = sma(K, 5)
+
+buy = histLine > histLine[1] and D < 10 and high > high[1]
+barcolor(buy ? yellow : na)
+
+plot(histLine, title="Histogram", style=columns, color=(histLine>=0 ? (histLine[1] < histLine ? lime : green) : (histLine[1] < histLine ? maroon : red) ), transp=0 )
+plot(macdLine, title="MACD", color=blue, transp=0)
+plot(signalLine, title="Signal", color=orange, transp=0)
