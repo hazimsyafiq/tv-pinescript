@@ -1,0 +1,15 @@
+study("RSI & Stochastic")
+
+RSI = rsi(close,14)
+Stoch = stoch(close, high, low, 14)
+K = sma(Stoch,3)
+D = sma(K, 3)
+
+plot(K, title = "%K", color=fuchsia, linewidth=1)
+plot(D, title = "%D", color=orange, linewidth=1)
+plot(RSI, title = "RSI", color=white, linewidth=2)
+
+hline(80, title="Overbought Line", color=aqua, linestyle=solid)
+hline(70, title="Upperl Line", color=aqua, linestyle=solid)
+hline(30, title="Lower Line", color=aqua, linestyle=solid)
+hline(20, title="Oversold Line", color=aqua, linestyle=solid)
