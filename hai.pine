@@ -1,0 +1,11 @@
+study("Heiken Ashi Ichimoku", "HAI", overlay=true)
+
+mas = input(false, "MA 20 & 40")
+SMA20=sma(close, 20)
+SMA40=sma(close, 40)
+plot(mas ? SMA20 : na, title="SMA 20", color=yellow, style = line, linewidth=2)
+plot(mas ? SMA40 : na, title="SMA 40", color=aqua, style = line, linewidth=2)
+
+data = heikenashi(tickerid) 
+o = security(data, period, open)
+c = security(data, period, close)
