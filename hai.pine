@@ -16,3 +16,12 @@ conversionLine = donchian(9)
 baseLine = donchian(26)
 leadLine1 = avg(conversionLine, baseLine)
 leadLine2 = donchian(52)
+
+p1 = plot(cloud ? leadLine1 : na, offset=26, color=green, title="Lead 1")
+p2 = plot(cloud ? leadLine2 : na, offset=26, color=red, title="Lead 2")
+fill(p1, p2, color = leadLine1 > leadLine2 ? green : red)
+
+buysignal=c > o and c[1] < o[1] and c > leadLine1[26] and c > leadLine2[26] and SMA20 > SMA40 and SMA40[1] < SMA40
+sellsignal=c < o and c[1] > o[1] and c < leadLine1[26] and c < leadLine2[26] and SMA20 < SMA40 and SMA40[1] > SMA40
+plotshape(buysignal? buysignal : na, title="Buy Signal 1", style=shape.triangleup, location=location.belowbar, color=lime, size=size.tiny)
+plotshape(sellsignal? sellsignal : na, title="Sell SIgnal 2", style=shape.triangledown, location=location.abovebar, color=red, size=size.tiny)
