@@ -1,0 +1,5 @@
+study(title="Lejen", shorttitle="Lejen", overlay=true)
+
+Ema8=ema(close, 8)
+Ema21=ema(close, 21)
+Ema55=ema(close, 55)
