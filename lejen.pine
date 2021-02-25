@@ -9,3 +9,6 @@ rsi=rsi(close,13)
 plot(Ema8, title="EMA 8", color=blue, style=line, linewidth=1)
 plot(Ema21, title="EMA 21", color=red, style=line, linewidth=1)
 plot(Ema55, title="EMA 55", color=lime, style = line, linewidth=1)
+
+buy1=crossover(Ema8, Ema21) and close > Ema55
+buy2=crossover(macdLine, signalLine) and Ema8 > Ema21 and close > Ema55 and rsi > 50
