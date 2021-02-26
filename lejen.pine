@@ -12,3 +12,6 @@ plot(Ema55, title="EMA 55", color=lime, style = line, linewidth=1)
 
 buy1=crossover(Ema8, Ema21) and close > Ema55
 buy2=crossover(macdLine, signalLine) and Ema8 > Ema21 and close > Ema55 and rsi > 50
+
+plotshape(buy1? buy1 : na, title="Buy Signal 1", style=shape.triangleup, location=location.belowbar, color=yellow, size=size.tiny)
+plotshape(buy2? buy2 : na, title="Buy Signal 1", style=shape.triangleup, location=location.belowbar, color=lime, size=size.tiny)
